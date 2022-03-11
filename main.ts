@@ -1,15 +1,30 @@
 input.onButtonPressed(Button.A, function () {
-	
+    serial.writeLine("" + (input.temperature()))
+    serial.writeLine("Celsius")
+    basic.showString("" + (input.temperature()))
+    basic.showString("Celsius")
 })
-basic.forever(function () {
-    if (input.buttonIsPressed(Button.A)) {
-        basic.showNumber(input.temperature())
-        basic.showString("Celsius")
-    } else if (input.buttonIsPressed(Button.B)) {
-        if (input.temperature() < 25) {
-            basic.showIcon(IconNames.Sad)
-        } else {
-            basic.showIcon(IconNames.Happy)
-        }
+input.onButtonPressed(Button.AB, function () {
+    if (input.temperature() < 25) {
+        serial.writeLine("Te vas a congelar")
+        basic.showIcon(IconNames.Umbrella)
+    } else {
+        serial.writeLine("Sin camisa")
+        basic.showLeds(`
+            # . # . #
+            . # # # .
+            # # # # #
+            . # # # .
+            # . # . #
+            `)
+    }
+})
+input.onButtonPressed(Button.B, function () {
+    if (input.temperature() < 25) {
+        serial.writeLine("" + (input.temperature()))
+        basic.showIcon(IconNames.Sad)
+    } else {
+        serial.writeLine("" + (input.temperature()))
+        basic.showIcon(IconNames.Happy)
     }
 })
